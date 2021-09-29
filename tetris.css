@@ -1,0 +1,38 @@
+:root{
+    --blue: #233D4D;
+    --orange: #FE7F2D;
+    --yellow: #FCCA46;
+    --green: #A1C181;
+    --peacock: #619B8A;
+
+    --fontTitre: 'Fleur De Leah', cursive;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+body{
+    margin: 0;
+}
+
+
+.gridContainer{
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+    background-color: #272727;
+    justify-content: center;
+    width: 600px;
+}
+
+.gridContainer > div{
+    height: 30px;
+    background-color: white;
+    border: 1px solid rgb(173, 173, 173);
+}
