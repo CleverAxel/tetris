@@ -36,3 +36,10 @@ body{
     background-color: white;
     border: 1px solid rgb(173, 173, 173);
 }
+
+button{
+    display: inline;
+    vertical-align: top;
+    width: 150px;
+    height: 75px;
+}
