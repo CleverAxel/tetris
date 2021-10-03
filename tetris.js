@@ -35,11 +35,7 @@ function FUNCTIONmain()
     }
 
     ARRAYgrilleJeu[0][0] = 9;
-
     FUNCTIONdisplayMatrice(ARRAYgrilleJeu);
-
-
-    
 
     OBJtetronimoChoisi = new CLASSTetromino(ARRAYTetromino);
     OBJtetronimoChoisi.METHODchoixEtRotationTetronimo(5, 3);
@@ -63,7 +59,7 @@ function FUNCTIONeventListener(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeuHTML
             } else{
                 COLONNE--;
                 PARAMArrayGrilleJeuDEBUG[LIGNE][COLONNE] = 0;
-                PARAMArrayGrilleJeuHTML[COLONNE+10].style.backgroundColor = "white";
+                PARAMArrayGrilleJeuHTML[COLONNE+10].style.backgroundColor = "";
                 COLONNE++;
                 PARAMArrayGrilleJeuDEBUG[LIGNE][COLONNE] = 9;
                 PARAMArrayGrilleJeuHTML[COLONNE+10].style.backgroundColor = "#706035";
@@ -79,7 +75,7 @@ function FUNCTIONeventListener(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeuHTML
             } else{
                 COLONNE++;
                 PARAMArrayGrilleJeuDEBUG[LIGNE][COLONNE] = 0;
-                PARAMArrayGrilleJeuHTML[COLONNE+10].style.backgroundColor = "white";
+                PARAMArrayGrilleJeuHTML[COLONNE+10].style.backgroundColor = "";
                 COLONNE--;
                 PARAMArrayGrilleJeuDEBUG[LIGNE][COLONNE] = 9;
                 PARAMArrayGrilleJeuHTML[COLONNE+10].style.backgroundColor = "#706035";
@@ -102,6 +98,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeu)
     let BOUTONplay = document.getElementById('play');
 
     var compteur = 0;
+    var ligne = 0;
     var timeOut = 0;
 
     var BOOLjeuEnPause = true;
@@ -124,10 +121,13 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeu)
     });
 
     function UNDERFUNCTIONgraviteDuTetronimo(){
-            if(compteur < tailleArray){
-                copieArray[compteur].style.backgroundColor = "#706035"; 
-                console.log(compteur);
+            if(ligne < 200){
+                //copieArray[compteur].style.backgroundColor = "#706035"; 
+                //console.log(compteur);
+                console.log(ligne);
+                ligne+=10;
                 compteur++;
+                UNDERFUNCTIONhello();
                 timeOut = setTimeout(UNDERFUNCTIONgraviteDuTetronimo, 100);
             } else{
                 UNDERFUNCTIONPauseTheGame();
@@ -140,6 +140,11 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeu)
 
     function UNDERFUNCTIONPauseTheGame(){
         clearTimeout(timeOut);
+    }
+
+    function UNDERFUNCTIONhello()
+    {
+        console.log("hello");
     }
 }
 
