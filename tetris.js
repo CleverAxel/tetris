@@ -327,13 +327,15 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
                 }
             }
             if(e.key == "ArrowUp"){
-                VARrotationTetronimo++;
-                if(VARrotationTetronimo == 4){
-                    VARrotationTetronimo = 0;
+                if(BOOLTetronimoEnJeu){
+                    VARrotationTetronimo++;
+                    if(VARrotationTetronimo == 4){
+                        VARrotationTetronimo = 0;
+                    }
+                    OBJtetronimoChoisi.METHODchoixEtRotationTetronimo(VARtetronimo, VARrotationTetronimo);
+                    UNDERFUNCTIONcalculRotation();
+                    UNDERFUNCTIONdraw();
                 }
-                OBJtetronimoChoisi.METHODchoixEtRotationTetronimo(VARtetronimo, VARrotationTetronimo);
-                UNDERFUNCTIONcalculRotation();
-                UNDERFUNCTIONdraw();
 
             }
             if(e.key == "ArrowDown"){
