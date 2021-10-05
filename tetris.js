@@ -106,8 +106,9 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
         } else{
             VARligneGrilleDEBUG++;
             UNDERFUNCTIONdraw();
+            //UNDERFUNCTIONempilementTetronimo();
         }
-        timeOut = setTimeout(UNDERFUNCTIONgraviteDuTetronimo, 1000);
+        timeOut = setTimeout(UNDERFUNCTIONgraviteDuTetronimo, 750);
 
     }
 
@@ -225,7 +226,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
                 }
             }
         }
-        FUNCTIONdisplayMatrice(PARAMArrayGrilleJeuDEBUG);
+        UNDERFUNCTIONempilementTetronimo();
     }
 
     function UNDERFUNCTIONcalculRotation()
@@ -266,6 +267,42 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
         }
     }
 
+    function UNDERFUNCTIONempilementTetronimo()
+    {
+        var calculLigne = 0;
+        var calculColonne = 0;
+        var removeDecimal = 0;
+        VARindicePosTetronimo = 0;
+
+        var BOOLcollision = false;
+
+        while(!BOOLcollision && VARindicePosTetronimo < 4){
+            calculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
+            removeDecimal = calculLigne % 1;
+            calculLigne -= removeDecimal;
+            calculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
+            if(calculLigne == 19 || PARAMArrayGrilleJeuDEBUG[calculLigne+1][calculColonne] == 9){
+                BOOLcollision = true;
+            }
+            VARindicePosTetronimo++;
+        }
+
+        if(BOOLcollision){
+            for(VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
+                calculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
+                removeDecimal = calculLigne % 1;
+                calculLigne -= removeDecimal;
+                calculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
+                PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = 9;
+            }
+            /*PAR ICI MON COCO */
+            BOOLjustspawned = true;
+            BOOLTetronimoEnJeu = false;
+            VARcolonneGrilleDEBUG = 3;
+            VARligneGrilleDEBUG = 0;
+        }
+    }
+
     function UNDERFUNCTIONStartTheGame(){
         UNDERFUNCTIONgraviteDuTetronimo();
     }
@@ -278,12 +315,16 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
     {
         document.addEventListener('keydown', (e) => {
             if(e.key == "ArrowRight"){
-                VARcolonneGrilleDEBUG++;
-                UNDERFUNCTIONdraw();
+                if(BOOLTetronimoEnJeu){
+                    VARcolonneGrilleDEBUG++;
+                    UNDERFUNCTIONdraw();
+                }
             }
             if(e.key == "ArrowLeft"){
-                VARcolonneGrilleDEBUG--;
-                UNDERFUNCTIONdraw();
+                if(BOOLTetronimoEnJeu){
+                    VARcolonneGrilleDEBUG--;
+                    UNDERFUNCTIONdraw();
+                }
             }
             if(e.key == "ArrowUp"){
                 VARrotationTetronimo++;
