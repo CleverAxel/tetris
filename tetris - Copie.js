@@ -51,8 +51,6 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
 
     var BOOLjustspawned = true;
 
-    var BOOLcollisionEpilement = false;
-
     //////////////////////////////////////////////
 
     var VARligneGrilleDEBUG = 0;
@@ -98,27 +96,12 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
         if(!BOOLTetronimoEnJeu){
             VARtetronimo = Math.floor(Math.random() * 7);
             OBJtetronimoChoisi.METHODchoixEtRotationTetronimo(VARtetronimo, 0);
+            
             UNDERFUNCTIONdraw();
             BOOLTetronimoEnJeu = true;
         } else{
-            if(BOOLcollisionEpilement){
-                
-                BOOLjustspawned = true;
-                BOOLTetronimoEnJeu = false;
-                VARcolonneGrilleDEBUG = 3;
-                VARligneGrilleDEBUG = 0;
-                BOOLcollisionEpilement = false;
-
-                for(VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
-                    calculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
-                    removeDecimal = calculLigne % 1;
-                    calculLigne -= removeDecimal;
-                    calculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
-                    PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = VARtetronimo;
-                }
-            } else{
             VARligneGrilleDEBUG++;
-            UNDERFUNCTIONdraw();}
+            UNDERFUNCTIONdraw();
         }
         timeOut = setTimeout(UNDERFUNCTIONgraviteDuTetronimo, 750);
 
@@ -301,20 +284,18 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
         }
 
         if(BOOLcollision){
-            /*for(VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
+            for(VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
                 calculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
                 removeDecimal = calculLigne % 1;
                 calculLigne -= removeDecimal;
                 calculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
                 PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = VARtetronimo;
-            }*/
-
-            BOOLcollisionEpilement = true;
-            /*PAR ICI MON COCO
+            }
+            /*PAR ICI MON COCO */
             BOOLjustspawned = true;
             BOOLTetronimoEnJeu = false;
             VARcolonneGrilleDEBUG = 3;
-            VARligneGrilleDEBUG = 0;*/
+            VARligneGrilleDEBUG = 0;
         }
     }
 
