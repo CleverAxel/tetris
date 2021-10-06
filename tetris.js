@@ -106,7 +106,6 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
         } else{
             VARligneGrilleDEBUG++;
             UNDERFUNCTIONdraw();
-            //UNDERFUNCTIONempilementTetronimo();
         }
         timeOut = setTimeout(UNDERFUNCTIONgraviteDuTetronimo, 750);
 
@@ -128,7 +127,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
                             BOOLfindFirstPiece = true;
                             COPIEColonneTetronimo = VARcolonneTetronimo;
                             
-                            if(VARcolonneGrilleDEBUG < 0 || VARcolonneGrilleDEBUG > 9 || (PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != -1 && PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != VARtetronimo)){
+                            if(VARcolonneGrilleDEBUG < 0 || VARcolonneGrilleDEBUG > 9 || (PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != -1 && PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != 9)){
                                 BOOLcollision = true;
                             } else{
                                 
@@ -139,7 +138,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
                             VARecart = VARcolonneTetronimo - COPIEColonneTetronimo;
                             VARcolonneGrilleDEBUG = VARcolonneGrilleDEBUG + VARecart;
                             
-                            if(VARcolonneGrilleDEBUG < 0 || VARcolonneGrilleDEBUG > 9 || (PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != -1 && PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != VARtetronimo)){
+                            if(VARcolonneGrilleDEBUG < 0 || VARcolonneGrilleDEBUG > 9 || (PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != -1 && PARAMArrayGrilleJeuDEBUG[VARligneGrilleDEBUG][VARcolonneGrilleDEBUG] != 9)){
                                 BOOLcollision = true;
                             } else{
                                 
@@ -192,7 +191,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
                 calculLigne -= removeDecimal;
                 calculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
 
-                PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = VARtetronimo;
+                PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = 9;
                 PARAMArrayGrilleJeuHTML[ARRAYsavePosTetronimo[VARindicePosTetronimo]].style.backgroundColor = ARRAYcouleurTetronimo[VARtetronimo];
             }
 
@@ -218,7 +217,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
                 calculLigne -= removeDecimal;
                 calculColonne = COPIEsavePosTetronimo[VARindicePosTetronimo] % 10;
 
-                PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = VARtetronimo;
+                PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = 9;
                 PARAMArrayGrilleJeuHTML[COPIEsavePosTetronimo[VARindicePosTetronimo]].style.backgroundColor = ARRAYcouleurTetronimo[VARtetronimo];
                 //replace correct pos de colonne
                 if(VARindicePosTetronimo == 0){
@@ -227,6 +226,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
             }
         }
         UNDERFUNCTIONempilementTetronimo();
+        FUNCTIONdisplayMatrice(PARAMArrayGrilleJeuDEBUG);
     }
 
     function UNDERFUNCTIONcalculRotation()
@@ -281,7 +281,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
             removeDecimal = calculLigne % 1;
             calculLigne -= removeDecimal;
             calculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
-            if(calculLigne == 19 || PARAMArrayGrilleJeuDEBUG[calculLigne+1][calculColonne] == 9){
+            if(calculLigne == 19 || (PARAMArrayGrilleJeuDEBUG[calculLigne+1][calculColonne] != 9 && PARAMArrayGrilleJeuDEBUG[calculLigne+1][calculColonne] != -1)){
                 BOOLcollision = true;
             }
             VARindicePosTetronimo++;
@@ -293,7 +293,7 @@ function FUNCTIONetatTemporelDujeu(PARAMArrayGrilleJeuDEBUG, PARAMArrayGrilleJeu
                 removeDecimal = calculLigne % 1;
                 calculLigne -= removeDecimal;
                 calculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
-                PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = 9;
+                PARAMArrayGrilleJeuDEBUG[calculLigne][calculColonne] = VARtetronimo;
             }
             /*PAR ICI MON COCO */
             BOOLjustspawned = true;
