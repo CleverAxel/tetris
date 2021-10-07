@@ -173,11 +173,9 @@ function FUNCTIONmain()
     function SUBFUNCTIONajustementRotation()
     {
         var COPIEcolonneGrilleDEBUG = VARcolonneGrilleDEBUG;
-        var COPIEligneGrilleDEBUG = VARligneGrilleDEBUG;
         var COPIEColonneTetronimo = 0;
-
         var BOOLfindFirstPiece = false;
-
+        var VARcalculEcart = 0;
         var BOOLsuperieur = false;
         var BOOLinferieur = false;
         var VARecartAjustement = 0;
@@ -204,7 +202,6 @@ function FUNCTIONmain()
                 }
             }
         }
-
 
         console.log(VARecartAjustement);
         if(BOOLsuperieur){
