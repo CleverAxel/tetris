@@ -42,6 +42,8 @@ function FUNCTIONmain()
 
     var BOOLTetronimoEnJeu = false;
 
+    var BOOLpauseDeBourrin = false;
+
     SUBFUNCTIONeventListener();
     
     /*--------------------------------------------------------- */
@@ -57,9 +59,11 @@ function FUNCTIONmain()
             OBJTetronimoChoisi.METHODchoixEtRotationTetronimo(VARtetronimo, 0);
             SUBFUNCTIONdraw();
         } else{
-            SUBFUNCTIONundraw();
-            VARligneGrilleDEBUG++;
-            SUBFUNCTIONdraw();
+            if(!BOOLpauseDeBourrin){
+                SUBFUNCTIONundraw();
+                VARligneGrilleDEBUG++;
+                SUBFUNCTIONdraw();
+            }
         }
         VARtimeOut = setTimeout(SUBFUNCTIONchuteTetronimo, 750);
     }
@@ -140,6 +144,7 @@ function FUNCTIONmain()
             }
         }
         VARligneGrilleDEBUG = COPIEligneGrilleDEBUG;
+        SUBFUNCTIONempilementTetronimo();
     }
 
     function SUBFUNCTIONundraw()
@@ -148,6 +153,33 @@ function FUNCTIONmain()
             SUBFUNCTIONcalculLigneEtColonne(COPIEsavePosTetronimo, VARindicePosTetronimo, true);
             grilleJeuTetrisHTML[COPIEsavePosTetronimo[VARindicePosTetronimo]].style.backgroundColor = "";
         }
+    }
+
+    function SUBFUNCTIONempilementTetronimo()
+    {
+        for(var VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
+            var VARcalculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
+            var VARremoveDecimal = VARcalculLigne % 1;
+            VARcalculLigne -= VARremoveDecimal;
+            var VARcalculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
+            if(VARcalculLigne == 19 || (ARRAYgrilleJeuDEBUG[VARcalculLigne+1][VARcalculColonne] != 9 && ARRAYgrilleJeuDEBUG[VARcalculLigne+1][VARcalculColonne] != -1)){
+                BOOLpauseDeBourrin = true;
+            }
+        }
+
+        /*if(BOOLpauseDeBourrin){
+            for(var VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
+                VARcalculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
+                VARremoveDecimal = VARcalculLigne % 1;
+                VARcalculLigne -= VARremoveDecimal;
+                VARcalculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
+                ARRAYgrilleJeuDEBUG[VARcalculLigne][VARcalculColonne] = VARtetronimo;
+            }
+            VARligneGrilleDEBUG = 0;
+            VARcolonneGrilleDEBUG = 3;
+            BOOLTetronimoEnJeu = false;
+            BOOLpauseDeBourrin = false;
+        }*/
     }
 
     function SUBFUNCTIONcalculLigneEtColonne(PARAMarraySavePos, PARAMindiceSavePos, BOOLremove)
@@ -203,7 +235,6 @@ function FUNCTIONmain()
             }
         }
 
-        console.log(VARecartAjustement);
         if(BOOLsuperieur){
             VARcolonneGrilleDEBUG -= VARecartAjustement;
         }
@@ -218,23 +249,27 @@ function FUNCTIONmain()
     {
         document.addEventListener('keydown', (e) => {
             if(e.key == "ArrowRight"){
-                VARcolonneGrilleDEBUG++;
-                if(SUBFUNCTIONCollision()){
-                    console.log("COLLISION");
-                    VARcolonneGrilleDEBUG--;
-                } else{
-                    SUBFUNCTIONundraw();
-                    SUBFUNCTIONdraw();
+                if(BOOLTetronimoEnJeu){
+                    VARcolonneGrilleDEBUG++;
+                    if(SUBFUNCTIONCollision()){
+                        console.log("COLLISION");
+                        VARcolonneGrilleDEBUG--;
+                    } else{
+                        SUBFUNCTIONundraw();
+                        SUBFUNCTIONdraw();
+                    }
                 }
             }
             if(e.key == "ArrowLeft"){
-                VARcolonneGrilleDEBUG--;
-                if(SUBFUNCTIONCollision()){
-                    console.log("COLLISION");
-                    VARcolonneGrilleDEBUG++;
-                } else{
-                    SUBFUNCTIONundraw();
-                    SUBFUNCTIONdraw();
+                if(BOOLTetronimoEnJeu){
+                    VARcolonneGrilleDEBUG--;
+                    if(SUBFUNCTIONCollision()){
+                        console.log("COLLISION");
+                        VARcolonneGrilleDEBUG++;
+                    } else{
+                        SUBFUNCTIONundraw();
+                        SUBFUNCTIONdraw();
+                    }
                 }
             }
             if(e.key == "ArrowUp"){
