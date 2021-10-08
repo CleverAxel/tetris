@@ -44,6 +44,8 @@ function FUNCTIONmain()
 
     var BOOLpauseDeBourrin = false;
 
+    var BOOLuserInput = false;
+
     SUBFUNCTIONeventListener();
     
     /*--------------------------------------------------------- */
@@ -58,6 +60,7 @@ function FUNCTIONmain()
             SUBFUNCTIONSpawnTetronimo();
             OBJTetronimoChoisi.METHODchoixEtRotationTetronimo(VARtetronimo, 0);
             SUBFUNCTIONdraw();
+            BOOLuserInput = true;
         } else{
             if(!BOOLpauseDeBourrin){
                 SUBFUNCTIONundraw();
@@ -157,7 +160,9 @@ function FUNCTIONmain()
 
     function SUBFUNCTIONempilementTetronimo()
     {
-        for(var VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
+        var BOOLconfirmationEmpilement = false;
+        var VARindicePosTetronimo = 0;
+        for(VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
             var VARcalculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
             var VARremoveDecimal = VARcalculLigne % 1;
             VARcalculLigne -= VARremoveDecimal;
@@ -166,6 +171,39 @@ function FUNCTIONmain()
                 BOOLpauseDeBourrin = true;
             }
         }
+
+        if(BOOLpauseDeBourrin){
+            setTimeout(() => {
+                for(VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
+                    VARcalculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
+                    VARremoveDecimal = VARcalculLigne % 1;
+                    VARcalculLigne -= VARremoveDecimal;
+                    VARcalculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
+                    if(VARcalculLigne == 19 || (ARRAYgrilleJeuDEBUG[VARcalculLigne+1][VARcalculColonne] != 9 && ARRAYgrilleJeuDEBUG[VARcalculLigne+1][VARcalculColonne] != -1)){
+                        BOOLconfirmationEmpilement = true;
+                    }
+                }
+
+                if(BOOLconfirmationEmpilement){
+                    BOOLuserInput = false;
+                    for(var VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
+                        VARcalculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
+                        VARremoveDecimal = VARcalculLigne % 1;
+                        VARcalculLigne -= VARremoveDecimal;
+                        VARcalculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
+                        ARRAYgrilleJeuDEBUG[VARcalculLigne][VARcalculColonne] = VARtetronimo;
+                    }
+                    VARligneGrilleDEBUG = 0;
+                    VARcolonneGrilleDEBUG = 3;
+                    BOOLTetronimoEnJeu = false;
+                    BOOLpauseDeBourrin = false;
+                } else{
+                    BOOLpauseDeBourrin = false;
+                }
+            }, 750);
+        }
+
+
 
         /*if(BOOLpauseDeBourrin){
             for(var VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
@@ -249,7 +287,7 @@ function FUNCTIONmain()
     {
         document.addEventListener('keydown', (e) => {
             if(e.key == "ArrowRight"){
-                if(BOOLTetronimoEnJeu){
+                if(BOOLuserInput){
                     VARcolonneGrilleDEBUG++;
                     if(SUBFUNCTIONCollision()){
                         console.log("COLLISION");
@@ -261,7 +299,7 @@ function FUNCTIONmain()
                 }
             }
             if(e.key == "ArrowLeft"){
-                if(BOOLTetronimoEnJeu){
+                if(BOOLuserInput){
                     VARcolonneGrilleDEBUG--;
                     if(SUBFUNCTIONCollision()){
                         console.log("COLLISION");
