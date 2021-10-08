@@ -10,6 +10,8 @@ function FUNCTIONmain()
     var BOUTONplay = document.getElementById('play');
     /*--------------------------------------------------------- */
 
+    var VARvitesseTimer = 750;
+    
     var VARtimeOut = 0;
 
     var VARligneGrilleDEBUG = 0;
@@ -41,9 +43,7 @@ function FUNCTIONmain()
     var COPIEsavePosTetronimo = new Array(4);
 
     var BOOLTetronimoEnJeu = false;
-
     var BOOLpauseDeBourrin = false;
-
     var BOOLuserInput = false;
 
     SUBFUNCTIONeventListener();
@@ -68,7 +68,7 @@ function FUNCTIONmain()
                 SUBFUNCTIONdraw();
             }
         }
-        VARtimeOut = setTimeout(SUBFUNCTIONchuteTetronimo, 750);
+        VARtimeOut = setTimeout(SUBFUNCTIONchuteTetronimo, VARvitesseTimer);
     }
 
     function SUBFUNCTIONCollision()
@@ -200,24 +200,8 @@ function FUNCTIONmain()
                 } else{
                     BOOLpauseDeBourrin = false;
                 }
-            }, 750);
+            }, VARvitesseTimer);
         }
-
-
-
-        /*if(BOOLpauseDeBourrin){
-            for(var VARindicePosTetronimo = 0; VARindicePosTetronimo < 4; VARindicePosTetronimo++){
-                VARcalculLigne = ARRAYsavePosTetronimo[VARindicePosTetronimo] / 10;
-                VARremoveDecimal = VARcalculLigne % 1;
-                VARcalculLigne -= VARremoveDecimal;
-                VARcalculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
-                ARRAYgrilleJeuDEBUG[VARcalculLigne][VARcalculColonne] = VARtetronimo;
-            }
-            VARligneGrilleDEBUG = 0;
-            VARcolonneGrilleDEBUG = 3;
-            BOOLTetronimoEnJeu = false;
-            BOOLpauseDeBourrin = false;
-        }*/
     }
 
     function SUBFUNCTIONcalculLigneEtColonne(PARAMarraySavePos, PARAMindiceSavePos, BOOLremove)
@@ -236,7 +220,19 @@ function FUNCTIONmain()
 
     function SUBFUNCTIONSpawnTetronimo()
     {
-        VARtetronimo = Math.floor(Math.random() * 7);
+        if(VARtetronimo == -1){
+            VARtetronimo = Math.floor(Math.random() * 7);
+            VARnextTetronimo = Math.floor(Math.random() * 7);
+            while(VARnextTetronimo == VARtetronimo){
+                VARnextTetronimo = Math.floor(Math.random() * 7);
+            }
+        } else{
+            VARtetronimo = VARnextTetronimo;
+            VARnextTetronimo = Math.floor(Math.random() * 7);
+            while(VARnextTetronimo == VARtetronimo){
+                VARnextTetronimo = Math.floor(Math.random() * 7);
+            }
+        }
         BOOLTetronimoEnJeu = true;
     }
 
@@ -310,19 +306,34 @@ function FUNCTIONmain()
                     }
                 }
             }
-            if(e.key == "ArrowUp"){
-                VARrotationTetronimo++;
-                if(VARrotationTetronimo == 4){
-                    VARrotationTetronimo = 0;
-                }
-                SUBFUNCTIONundraw();
-                OBJTetronimoChoisi.METHODchoixEtRotationTetronimo(VARtetronimo, VARrotationTetronimo);
-                SUBFUNCTIONajustementRotation();
-                SUBFUNCTIONdraw();
+            if(BOOLuserInput){
+                if(e.key == "ArrowUp"){
+                    VARrotationTetronimo++;
+                    if(VARrotationTetronimo == 4){
+                        VARrotationTetronimo = 0;
+                    }
+                    SUBFUNCTIONundraw();
+                    OBJTetronimoChoisi.METHODchoixEtRotationTetronimo(VARtetronimo, VARrotationTetronimo);
+                    SUBFUNCTIONajustementRotation();
+                    SUBFUNCTIONdraw();
 
+                }
             }
-            if(e.key == "ArrowDown"){
-                console.log("BAS");
+            if(BOOLuserInput){
+                if(e.key == "ArrowDown" && !BOOLpauseDeBourrin){
+                    VARvitesseTimer = 50;
+                    /*if(e.repeat){
+                        console.log("el famoso");
+                    } else{
+                        console.log("flute");
+                    }*/
+                }
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if(e.key == "ArrowDown" && !BOOLpauseDeBourrin){
+                VARvitesseTimer = 750;
             }
         });
 
