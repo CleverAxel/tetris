@@ -193,6 +193,8 @@ function FUNCTIONmain()
                         VARcalculColonne = ARRAYsavePosTetronimo[VARindicePosTetronimo] % 10;
                         ARRAYgrilleJeuDEBUG[VARcalculLigne][VARcalculColonne] = VARtetronimo;
                     }
+
+                    //RETIRE PIECE ICI
                     VARligneGrilleDEBUG = 0;
                     VARcolonneGrilleDEBUG = 3;
                     BOOLTetronimoEnJeu = false;
